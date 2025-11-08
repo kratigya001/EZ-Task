@@ -168,7 +168,7 @@ export default function ContactForm() {
               {submitted && (
                 <p className="text-green-600 text-sm mt-1 font-medium">Form Submitted</p>
               )}
-            
+
               {/* show server response for debugging */}
               {serverResponse && (
                 <div className="mt-2 text-sm bg-gray-50 p-2 rounded border">
@@ -176,7 +176,7 @@ export default function ContactForm() {
                   <pre className="whitespace-pre-wrap text-xs mt-1">{JSON.stringify(serverResponse.body, null, 2)}</pre>
                 </div>
               )}
-            </div>
+            </div>---
 
         </div>
       </div>
