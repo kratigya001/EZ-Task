@@ -1,4 +1,3 @@
-// src/ContactForm.jsx
 import React, { useState } from "react";
 import FormInput from "./FormInput";
 
@@ -11,24 +10,28 @@ export default function ContactForm() {
     phone: "",
     message: "",
   });
+
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [serverResponse, setServerResponse] = useState(null); 
+  const [serverResponse, setServerResponse] = useState(null);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+  // --- Validation ---
   const validate = () => {
     const e = {};
     if (!form.name.trim()) e.name = "Name is required";
     if (!form.email.trim()) e.email = "Email is required";
     else if (!emailRegex.test(form.email.trim())) e.email = "Enter a valid email";
     if (!form.message.trim()) e.message = "Message is required";
-    if (form.phone && !/^[0-9+\-\s()]{6,20}$/.test(form.phone)) e.phone = "Enter a valid phone";
+    if (form.phone && !/^[0-9+\-\s()]{6,20}$/.test(form.phone))
+      e.phone = "Enter a valid phone";
     return e;
   };
 
+  // --- Handle Input Change ---
   const handleChange = (name) => (ev) => {
     setForm((s) => ({ ...s, [name]: ev.target.value }));
     setErrors((s) => ({ ...s, [name]: "" }));
@@ -36,71 +39,67 @@ export default function ContactForm() {
     setSubmitted(false);
   };
 
-
+  // --- Handle Form Submit ---
   const handleSubmit = async (ev) => {
-   ev.preventDefault();
-   setServerError("");
-   setSubmitted(false);
-   setServerResponse(null);
+    ev.preventDefault();
+    setServerError("");
+    setSubmitted(false);
+    setServerResponse(null);
 
-  const v = validate();
-  if (Object.keys(v).length) {
-    setErrors(v);
-    return;
-  }
+    const v = validate();
+    if (Object.keys(v).length) {
+      setErrors(v);
+      return;
+    }
 
-  setLoading(true);
-  try {
-    const res = await fetch(ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: form.name.trim(),
-        email: form.email.trim(),
-        phone: form.phone.trim(),
-        message: form.message.trim(),
-      }),
-    });
-
-    // Log status and headers for debugging
-    console.log("Fetch response (status):", res.status, res.statusText);
-    console.log("Fetch response headers:", Array.from(res.headers.entries()));
-
-    // Try to parse JSON (may throw if body empty)
-    let json = null;
+    setLoading(true);
     try {
-      json = await res.json();
-      console.log("Parsed JSON response:", json);
-    } catch (parseErr) {
-      console.warn("Response body not JSON or empty:", parseErr);
-    }
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          phone: form.phone.trim(),
+          message: form.message.trim(),
+        }),
+      });
 
-    // Consider 200 or 201 as success (change if backend strictly uses 200)
-    if (res.ok && (res.status === 200 || res.status === 201)) {
-      setForm({ name: "", email: "", phone: "", message: "" });
-      setErrors({});
-      setSubmitted(true);
-      setServerResponse({ status: res.status, body: json });
-    } else {
-      // server side error - try to show meaningful message
-      const message =
-        (json && (json.message || json.detail || JSON.stringify(json))) ||
-        `Server returned status ${res.status}`;
-      setServerError(message);
-      setServerResponse({ status: res.status, body: json });
+      console.log("Fetch response (status):", res.status, res.statusText);
+
+      let json = null;
+      try {
+        json = await res.json();
+        console.log("Parsed JSON response:", json);
+      } catch (parseErr) {
+        console.warn("Response body not JSON or empty:", parseErr);
+      }
+
+      // Accept success for 200 or 201
+      if (res.ok && (res.status === 200 || res.status === 201)) {
+        setForm({ name: "", email: "", phone: "", message: "" });
+        setErrors({});
+        setSubmitted(true);
+        setServerResponse({ status: res.status, body: json });
+      } else {
+        const message =
+          (json && (json.message || json.detail || JSON.stringify(json))) ||
+          `Server returned status ${res.status}`;
+        setServerError(message);
+        setServerResponse({ status: res.status, body: json });
+      }
+    } catch (err) {
+      console.error("Network / fetch error:", err);
+      setServerError("Network error — check console or Network tab (possible CORS).");
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    // network/CORS errors end up here
-    console.error("Network / fetch error:", err);
-    setServerError("Network error — check console or Network tab (possible CORS).");
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <form onSubmit={handleSubmit} method="POST" noValidate>
       <div className="grid gap-4">
+        {/* --- Name --- */}
         <FormInput
           label="Your name"
           name="name"
@@ -110,6 +109,7 @@ export default function ContactForm() {
           error={errors.name}
         />
 
+        {/* --- Email --- */}
         <FormInput
           label="Your email"
           name="email"
@@ -120,6 +120,7 @@ export default function ContactForm() {
           error={errors.email}
         />
 
+        {/* --- Phone --- */}
         <FormInput
           label="Phone"
           name="phone"
@@ -129,6 +130,7 @@ export default function ContactForm() {
           error={errors.phone}
         />
 
+        {/* --- Message Textarea --- */}
         <div className="relative mb-4">
           <textarea
             id="message"
@@ -147,10 +149,12 @@ export default function ContactForm() {
           )}
         </div>
 
+        {/* --- Server Error --- */}
         {serverError && (
           <p className="text-red-600 text-sm mb-1">{serverError}</p>
         )}
 
+        {/* --- Submit Button + Success Message --- */}
         <div className="flex flex-col items-start">
           <button
             type="submit"
@@ -162,22 +166,14 @@ export default function ContactForm() {
             {loading ? "Submitting..." : "Submit"}
           </button>
 
-          {/* EXACTLY under the submit button */}
-          {/* under the "Form Submitted" message area */}
-            <div className="mt-3">
-              {submitted && (
-                <p className="text-green-600 text-sm mt-1 font-medium">Form Submitted</p>
-              )}
-
-              {/* show server response for debugging */}
-              {serverResponse && (
-                <div className="mt-2 text-sm bg-gray-50 p-2 rounded border">
-                  <strong>API status:</strong> {serverResponse.status}
-                  <pre className="whitespace-pre-wrap text-xs mt-1">{JSON.stringify(serverResponse.body, null, 2)}</pre>
-                </div>
-              )}
-            </div>---
-
+          {/* --- Success Message --- */}
+          <div className="mt-3">
+            {submitted && (
+              <p className="text-green-600 text-sm mt-1 font-medium">
+                Form Submitted
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </form>

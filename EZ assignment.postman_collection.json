@@ -1,0 +1,42 @@
+{
+	"info": {
+		"_postman_id": "8feb89ea-be5f-4542-917c-f7e53f048acd",
+		"name": "EZ assignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49880190",
+		"_collection_link": "https://bansalcourse5-1268878.postman.co/workspace/Kratigya's-Workspace~4992e1f4-cb86-4063-80f3-794e57091021/collection/49880190-8feb89ea-be5f-4542-917c-f7e53f048acd?action=share&source=collection_link&creator=49880190"
+	},
+	"item": [
+		{
+			"name": "test",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Test user\",\r\n  \"email\": \"testuser@gmail.com\",\r\n  \"phone\": \"908765498\",\r\n  \"message\": \"This is a message\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://vernanbackend.ezlab.in/api/contact-us/",
+					"protocol": "https",
+					"host": [
+						"vernanbackend",
+						"ezlab",
+						"in"
+					],
+					"path": [
+						"api",
+						"contact-us",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

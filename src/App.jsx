@@ -4,14 +4,13 @@ import FormInput from "./FormInput";
 import ContactForm from "./ContactForm";
 
 
-// --- 1. Navbar Component (No changes) ---
 const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 p-6 bg-[#FFF7F5]/90 backdrop-blur-sm">
         <img 
             src="/v-films-logo.png" 
             alt="V Films Logo" 
-            className="absolute w-[124px] h-[48px]" // Aapka correction
+            className="absolute w-[124px] h-[48px]" 
           />
       <div className="container mx-auto flex justify-end items-center gap-6 md:gap-8">
         <a 
@@ -74,7 +73,7 @@ const Hero = () => {
             <img 
               src="/v-films-logo.png" 
               alt="V Films Logo" 
-              className="relative z-10 w-60" // Aapka correction
+              className="relative z-10 w-60" 
             />
           </div>
         </div>
@@ -106,23 +105,16 @@ V doesn’t just tell stories - V honors them.
   );
 }
 
-// --- 3. About Team Component (UPDATED & RESPONSIVE) ---
+// --- 3. About Team Component ---
 const AboutTeam = () => {
   return (
     // Section container
     <section id="about" className="relative w-full py-20 px-4 overflow-hidden">
-      {/* This is the "scalable canvas".
-        - It's centered (mx-auto) and fills the width (w-full).
-        - It's capped at 1920px (max-w-[1920px]), your likely design size.
-        - aspect-[16/10] (1920/1200) forces its height to scale proportionally with its width.
-        - All child elements will now position themselves relative to *this* scaling box.
-      */}
+      
+      
       <div className="relative mx-auto w-full max-w-[1920px] aspect-[16/10]">
         
         {/* Yellow Note */}
-        {/* BEFORE: className="absolute top-[-17px] left-[170px] w-[620px]" 
-          AFTER: Uses percentages. top:(-17/1200), left:(170/1920), w:(620/1920)
-        */}
         <img 
           src="yellow-note.png" 
           alt="Yellow note" 
@@ -130,26 +122,20 @@ const AboutTeam = () => {
         />
         
         {/* India Gate */}
-        {/* BEFORE: className="absolute w-[442px] h-[442px] top-[572px] left-[40px]" 
-          AFTER: top:(572/1200), left:(40/1920), w:(442/1920), h-auto to keep aspect ratio
-        */}
+      
         <img
            src='india-gate.svg'
           className="absolute w-[23%] h-auto top-[47.6%] left-[2.1%]" 
         />
         
         {/* "Branding Experts" arrow */}
-        {/* BEFORE: className="absolute top-[500px] left-[692px] w-[197px] h-[226px]" 
-          AFTER: top:(500/1200), left:(692/1920), w:(197/1920)
-        */}
+        
         <img 
           src="arrow-branding-experts.svg" 
           alt="Branding Experts arrow" 
           className="absolute top-[41.6%] left-[36%] w-[10.3%] h-auto" 
         />
-        {/* BEFORE: text-[42px] top-[750px] left-[545px] h-[48px] w-[228px]
-          AFTER: text-[clamp(18px,2.2vw,42px)] top:(750/1200), left:(545/1920)
-        */}
+       
         <span 
           className="font-cursive font-[400] text-[clamp(18px,2.2vw,42px)] absolute top-[62.5%] left-[28.4%] text-[#103255] whitespace-nowrap"
         >
@@ -157,9 +143,7 @@ const AboutTeam = () => {
         </span>
         
         {/* Team Silhouette */}
-        {/* BEFORE: className="absolute top-[340px] left-[958px] w-[647px] h-[397px]" 
-          AFTER: top:(340/1200), left:(958/1920), w:(647/1920)
-        */}
+        
         <img 
           src='team-silhouette.svg'
           alt="Team silhouette"
@@ -167,51 +151,36 @@ const AboutTeam = () => {
         />
         
         {/* "Film Makers" callout */}
-        {/* BEFORE: className="absolute top-[229px] left-[1107px] w-[151.5px] h-[95px]"
-          AFTER: top:(229/1200), left:(1107/1920), w:(151.5/1920)
-        */}
+      
         <img 
           src='arrow-film-makers.svg'
           alt="Film Makers arrow" 
           className="absolute top-[19.1%] left-[57.6%] w-[7.9%] h-auto"
         />
-        {/* BEFORE: text-[42px] absolute top-[168px] left-[1008px] h-[48px] w-[179px]
-          AFTER: text-[clamp(18px,2.2vw,42px)] top:(168/1200), left:(1008/1920)
-        */}
+       
         <span className="font-cursive font-[400] text-[clamp(18px,2.2vw,42px)] absolute top-[14%] left-[52.5%] text-[#0F3255] whitespace-nowrap">
           Film Makers
         </span>
 
         {/* "Art Curators" callout */}
-        {/* BEFORE: className="absolute top-[343px] left-[1648px] w-[102px] h-[146px]"
-          AFTER: top:(343/1200), left:(1648/1920), w:(102/1920)
-        */}
+        
         <img 
           src='arrow-art-curators.svg'
           alt="Art Curators arrow" 
           className="absolute top-[28.5%] left-[85.8%] w-[5.3%] h-auto"
         />
-        {/* BEFORE: text-[42px] absolute top-[273px] left-[1683px] h-[48px] w-[167px]
-          AFTER: text-[clamp(18px,2.2vw,42px)] top:(273/1200), left:(1683/1920)
-        */}
+       
         <span className="font-cursive font-[400] text-[clamp(18px,2.2vw,42px)] absolute top-[22.8%] left-[87.6%] text-[#103255] whitespace-nowrap">
           Art Curators
         </span>
 
-        {/* Bottom Text and Button */}
-        {/* BEFORE: className="absolute top-[838px] left-[890px] text-center w-[780px]"
-          AFTER: top:(838/1200), left:(890/1920), w:(780/1920)
-        */}
+       
         <div className="absolute top-[69.8%] left-[46.3%] text-center w-[40.6%]">
-          {/* BEFORE: text-4xl (36px)
-            AFTER: text-[clamp(16px,1.9vw,36px)]
-          */}
+         
           <h3 className="font-halant text-[clamp(16px,1.9vw,36px)] text-[#0F3255] mb-[2%]">
             Take a closer look at the stories V bring to life.
           </h3>
-          {/* BEFORE: text-lg (18px), px-8 (32px), py-3 (12px)
-            AFTER: Scaled text and padding
-          */}
+          
           <button 
             className="px-[1.6vw] py-[1vh] bg-[#E87A5E] text-white text-[clamp(12px,1vw,18px)] font-medium rounded-full hover:bg-opacity-90 transition-all"
           >
@@ -232,7 +201,6 @@ const ContactSection = () => {
 
 
 
-  // ✅ everything below untouched
   return (
     <section id="contact" className="relative min-h-screen py-24 px-4 overflow-hidden">
       <img 
@@ -258,7 +226,7 @@ const ContactSection = () => {
           </p>
         </div>
 
-        {/* ✅ now simply call the form */}
+        {/*  now simply call the form */}
         <div>
           <h2 className="font-halant text-5xl md:text-6xl text-[#0F3255] mb-4">
             Join the Story
@@ -279,7 +247,7 @@ const ContactSection = () => {
   );
 }
 
-// --- 6. Main App Component (unchanged) ---
+// --- 6. Main App Component ---
 export default function App() {
   useEffect(() => {
     const style = document.createElement('style');
